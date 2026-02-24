@@ -1,5 +1,5 @@
-import {Account} from '@/domain/Account';
-import {Transaction} from '@/domain/Transaction';
+import {Account, CreateAccountPayload} from '@/domain/Account';
+import {Transaction, MoveMoneyPayload} from '@/domain/Transaction';
 import {get, post, put, remove} from '@/flexxApi/FlexxApiClientService';
 
 class FlexxApiService {
@@ -47,8 +47,12 @@ class FlexxApiService {
     });
   }
 
-  async createAccount(payload: Omit<Account, 'account_id'>): Promise<Account> {
+  async createAccount(payload: CreateAccountPayload): Promise<Account> {
     return post<Account>({endpoint: 'pages/accounts', body: payload});
+  }
+
+  async moveMoney(payload: MoveMoneyPayload): Promise<Transaction[]> {
+    return post<Transaction[]>({endpoint: 'move-money', body: payload});
   }
 }
 

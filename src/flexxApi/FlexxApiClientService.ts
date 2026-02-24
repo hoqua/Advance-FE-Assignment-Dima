@@ -113,7 +113,9 @@ async function request<T>({
 
     if (method !== 'GET') {
       toast.error(
-        data?.message || 'There was an error processing your request.',
+        data?.message ||
+          data?.detail ||
+          'There was an error processing your request.',
       );
     }
 

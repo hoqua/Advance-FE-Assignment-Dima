@@ -1,9 +1,7 @@
-import {Account} from '@/domain/Account';
+import {Account, CreateAccountPayload} from '@/domain/Account';
 import {QueryClientIds} from '@/QueryClient/queryClient.ids';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import flexxApiService, {
-  CreateAccountPayload,
-} from '@/flexxApi/flexxApiService';
+import flexxApiService from '@/flexxApi/flexxApiService';
 
 interface UseCreateAccountMutationArgs {
   onSuccess?: (account: Account) => void;

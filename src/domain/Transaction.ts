@@ -20,5 +20,12 @@ interface Transaction {
   account_name: string;
 }
 
+interface MoveMoneyPayload {
+  source_account_id: string;
+  destination_account_id: string;
+  amount: number;
+  merchant: string;
+}
+
 export {TransactionDirection, TransactionStatus};
-export type {Transaction};
+export type {Transaction, MoveMoneyPayload};

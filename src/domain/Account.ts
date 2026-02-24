@@ -15,5 +15,7 @@ interface Account {
   balance: number;
 }
 
+type CreateAccountPayload = Omit<Account, 'account_id'>;
+
 export {AccountStatus};
-export type {Account};
+export type {Account, CreateAccountPayload};
