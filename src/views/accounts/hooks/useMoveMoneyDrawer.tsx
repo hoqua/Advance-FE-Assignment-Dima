@@ -5,9 +5,9 @@ import React, {useCallback, useMemo} from 'react';
 
 import {useBoolean} from '@/hooks/useBoolean';
 import {zodResolver} from '@hookform/resolvers/zod';
-import DrawerWrapper from '@components/DrawerWrapper/DrawerWrapper';
-import useMoveMoneyMutation from '@/hooks/useMoveMoneyMutation';
 import useFetchAccounts from '@/hooks/useFetchAccounts';
+import useMoveMoneyMutation from '@/hooks/useMoveMoneyMutation';
+import DrawerWrapper from '@components/DrawerWrapper/DrawerWrapper';
 import MoveMoneyForm from '@views/accounts/components/MoveMoneyForm';
 
 const moveMoneySchema = z.object({
@@ -64,6 +64,22 @@ export const useMoveMoneyDrawer = () => {
     form.reset();
   }, [closeDrawer, form]);
 
+  const formElement = useMemo(
+    () => (
+      <MoveMoneyForm
+        form={form}
+        onSubmit={handleSubmit}
+        isLoading={isPending}
+        accounts={accounts}
+      />
+    ),
+    [form, handleSubmit, isPending, accounts],
+  );
+
+  // Panel for embedding as extraComponent inside another drawer
+  const MoveMoneyPanel = isOpen ? formElement : undefined;
+
+  // Standalone drawer for when no account drawer is open
   const MoveMoneyDrawer = useMemo(() => {
     if (typeof window === 'undefined') return null;
 
@@ -79,21 +95,17 @@ export const useMoveMoneyDrawer = () => {
         ]}
         drawerWidth='md'
       >
-        <MoveMoneyForm
-          form={form}
-          onSubmit={handleSubmit}
-          isLoading={isPending}
-          accounts={accounts}
-        />
+        {formElement}
       </DrawerWrapper>,
       document.body,
     );
-  }, [isOpen, handleClose, form, handleSubmit, isPending, accounts]);
+  }, [isOpen, handleClose, formElement]);
 
   return {
     isOpen,
     openDrawer,
-    closeDrawer,
+    closeDrawer: handleClose,
+    MoveMoneyPanel,
     MoveMoneyDrawer,
   };
 };

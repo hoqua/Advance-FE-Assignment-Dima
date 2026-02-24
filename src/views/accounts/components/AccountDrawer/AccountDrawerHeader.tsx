@@ -15,9 +15,10 @@ const statusColorMap: Record<AccountStatus, 'success' | 'error' | 'default'> = {
 
 interface AccountDrawerHeaderProps {
   account: Account;
+  onMoveMoneyClick?: () => void;
 }
 
-const AccountDrawerHeader: React.FC<AccountDrawerHeaderProps> = ({account}) => {
+const AccountDrawerHeader: React.FC<AccountDrawerHeaderProps> = ({account, onMoveMoneyClick}) => {
   return (
     <Stack gap={2.5}>
       {/* Row 1: Name + Status + Bank */}
@@ -72,12 +73,15 @@ const AccountDrawerHeader: React.FC<AccountDrawerHeaderProps> = ({account}) => {
             </Typography>
           </Stack>
         </Stack>
-        <Button
-          variant='outlined'
-          startIcon={<FlexxIcon icon='fluent--arrow-swap-20-regular' />}
-        >
-          Move Money
-        </Button>
+        {onMoveMoneyClick && (
+          <Button
+            variant='outlined'
+            startIcon={<FlexxIcon icon='fluent--arrow-swap-20-regular' />}
+            onClick={onMoveMoneyClick}
+          >
+            Move Money
+          </Button>
+        )}
       </Stack>
 
       {/* Row 3: Balance */}

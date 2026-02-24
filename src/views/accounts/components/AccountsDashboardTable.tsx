@@ -10,7 +10,17 @@ import {FlexxTable} from '@components/FlexxTable/FlexxTable';
 import AccountDrawer from '@views/accounts/components/AccountDrawer/AccountDrawer';
 import useAccountsDashboardTable from '@views/accounts/hooks/useAccountsDashboardTable';
 
-const AccountsDashboardTable: React.FC = () => {
+interface AccountsDashboardTableProps {
+  extraComponent?: React.ReactNode;
+  onExtraClose?: () => void;
+  onMoveMoneyClick?: () => void;
+}
+
+const AccountsDashboardTable: React.FC<AccountsDashboardTableProps> = ({
+  extraComponent,
+  onExtraClose,
+  onMoveMoneyClick,
+}) => {
   const {searchQuery} = useGlobalSearch();
   const {data, isLoading, isError} = useFetchAccounts({searchQuery});
   const [selectedAccountId, setSelectedAccountId] = useQueryState('account_id');
@@ -32,7 +42,8 @@ const AccountsDashboardTable: React.FC = () => {
 
   const handleClose = useCallback(() => {
     setSelectedAccountId(null);
-  }, [setSelectedAccountId]);
+    onExtraClose?.();
+  }, [setSelectedAccountId, onExtraClose]);
 
   const handleAccountClick = useCallback(
     (accountId: string) => {
@@ -56,6 +67,9 @@ const AccountsDashboardTable: React.FC = () => {
         account={drawerAccount}
         open={!!selectedAccountId}
         onClose={handleClose}
+        extraComponent={extraComponent}
+        onExtraClose={onExtraClose}
+        onMoveMoneyClick={onMoveMoneyClick}
       />
     </>
   );

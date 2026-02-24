@@ -38,6 +38,7 @@ interface DrawerWrapperProps {
   actions?: Action[];
   fixedActions?: boolean;
   expansionCTAs?: Action[];
+  onExtraClose?: () => void;
 }
 
 const widthMap: Record<drawerSizes, string> = {
@@ -63,6 +64,7 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({
   extraComponentWidth,
   fixedActions = true,
   expansionCTAs,
+  onExtraClose,
 }) => {
   const drawerRef = useRef<HTMLDivElement>(null);
   const mainComponentRef = useRef<HTMLDivElement>(null);
@@ -217,14 +219,6 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({
       style={
         isFullWidth ? {zIndex: 'var(--drawer-extended-z-index) !important'} : {}
       }
-      ModalProps={{
-        onClickCapture: (e: React.MouseEvent) => {
-          const paper = (e.currentTarget as HTMLElement).querySelector('.MuiDrawer-paper');
-          if (paper && !paper.contains(e.target as Node)) {
-            onClose();
-          }
-        },
-      }}
       PaperProps={{
         style: {
           minWidth: isSmDown ? '100%' : '500px',
@@ -284,7 +278,7 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({
           <IconButton
             onClick={e => {
               e.stopPropagation();
-              onClose();
+              (onExtraClose ?? onClose)();
             }}
           >
             <FlexxIcon icon='fluent--dismiss-24-regular' />
