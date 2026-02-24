@@ -22,9 +22,16 @@ const AccountsMenuItem: FlexxMenuItem = {
   href: '/accounts',
 };
 
+const TransactionsMenuItem: FlexxMenuItem = {
+  id: FLEXX_MENU_ITEM_IDS.TRANSACTIONS,
+  icon: 'fluent--arrow-swap-20-regular',
+  title: 'Transactions',
+  href: '/transactions',
+};
+
 const TopGroup: FlexxMenuItemsGroup = {
   id: 'top-group',
-  items: [HomeMenuItem, AccountsMenuItem],
+  items: [HomeMenuItem, AccountsMenuItem, TransactionsMenuItem],
 };
 
 export const FlexxMenuGroups: Array<FlexxMenuItemsGroup> = [TopGroup];

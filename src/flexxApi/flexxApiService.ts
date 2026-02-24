@@ -1,5 +1,6 @@
 import {get, post, put, remove} from '@/flexxApi/FlexxApiClientService';
 import {Account} from '@/domain/Account';
+import {Transaction} from '@/domain/Transaction';
 
 class FlexxApiService {
   private formatQueryParams(
@@ -26,6 +27,14 @@ class FlexxApiService {
   async fetchAccounts(params: {search_term?: string}): Promise<Account[]> {
     const queryParams = this.formatQueryParams(params);
     return get<Account[]>({endpoint: `pages/accounts?${queryParams}`});
+  }
+
+  async fetchTransactions(params?: {
+    account_id?: string;
+    search_term?: string;
+  }): Promise<Transaction[]> {
+    const queryParams = this.formatQueryParams(params);
+    return get<Transaction[]>({endpoint: `pages/transaction?${queryParams}`});
   }
 }
 

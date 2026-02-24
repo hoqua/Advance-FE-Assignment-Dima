@@ -91,7 +91,7 @@ const FlexxTable: React.FC<FlexxTableProps> = ({
   noWrap = true,
   maxLinesWrap,
   noHeaders = false,
-  cellPadding = '0.5rem',
+  cellPadding = '0.4rem 1rem',
   totalItems,
   disableSort = false,
   paginationProps,

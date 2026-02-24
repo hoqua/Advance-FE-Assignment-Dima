@@ -3,6 +3,7 @@ import {Session} from '@/domain/Session';
 enum FLEXX_MENU_ITEM_IDS {
   HOME = 'home',
   ACCOUNTS = 'accounts',
+  TRANSACTIONS = 'transactions',
 }
 
 interface FlexxMenuItem {
