@@ -180,7 +180,7 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({
   }, [removeVerticalPadding, removePaddingBottom]);
 
   const actualButtonsPosition = React.useMemo(() => {
-    if (fixedActions) {
+    if (fixedActions && expand) {
       return {
         ...buttonsPosition,
         right:
@@ -190,7 +190,7 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({
       };
     }
     return buttonsPosition;
-  }, [fixedActions, buttonsPosition, width, isSmDown]);
+  }, [fixedActions, expand, buttonsPosition, width, isSmDown]);
 
   const modifiedActions = React.useMemo(() => {
     if (!actions?.length) return actions;

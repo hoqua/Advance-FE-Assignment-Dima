@@ -1,6 +1,6 @@
-import {get, post, put, remove} from '@/flexxApi/FlexxApiClientService';
 import {Account} from '@/domain/Account';
 import {Transaction} from '@/domain/Transaction';
+import {get, post, put, remove} from '@/flexxApi/FlexxApiClientService';
 
 class FlexxApiService {
   private formatQueryParams(
@@ -45,6 +45,10 @@ class FlexxApiService {
     return get<Transaction[]>({
       endpoint: `pages/accounts/${accountId}/transactions?${queryParams}`,
     });
+  }
+
+  async createAccount(payload: Omit<Account, 'account_id'>): Promise<Account> {
+    return post<Account>({endpoint: 'pages/accounts', body: payload});
   }
 }
 
