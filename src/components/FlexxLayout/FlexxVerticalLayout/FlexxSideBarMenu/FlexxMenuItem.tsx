@@ -47,12 +47,10 @@ const renderMenuItems = (items: FlexxMenuItem[], session?: Session) => {
       );
     }
 
-    const isDisabled = useMemo(() => {
-      if (typeof item.disabled === 'function') {
-        return item.disabled(session);
-      }
-      return item.disabled;
-    }, [session, item.disabled]);
+    const isDisabled =
+      typeof item.disabled === 'function'
+        ? item.disabled(session)
+        : item.disabled;
 
     return (
       <MenuItem

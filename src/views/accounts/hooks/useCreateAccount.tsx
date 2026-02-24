@@ -14,8 +14,14 @@ import CreateAccountForm from '@views/accounts/components/CreateAccountForm';
 const createAccountSchema = z.object({
   name: z.string().min(1, 'Account name is required'),
   bank_name: z.string().min(1, 'Bank name is required'),
-  routing_number: z.string().min(1, 'Routing number is required'),
-  account_number: z.string().min(1, 'Account number is required'),
+  routing_number: z
+    .string()
+    .min(1, 'Routing number is required')
+    .max(9, 'Routing number must be at most 9 characters'),
+  account_number: z
+    .string()
+    .min(1, 'Account number is required')
+    .max(17, 'Account number must be at most 17 characters'),
 });
 
 export type CreateAccountFormValues = z.infer<typeof createAccountSchema>;

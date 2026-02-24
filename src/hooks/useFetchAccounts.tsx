@@ -10,7 +10,7 @@ interface useFetchAccountsArgs {
 
 const useFetchAccounts = (args?: useFetchAccountsArgs) => {
   return useQuery<Account[]>({
-    queryKey: [QueryClientIds.ACCOUNTS],
+    queryKey: [QueryClientIds.ACCOUNTS, args?.searchQuery],
     queryFn: () =>
       flexxApiService().fetchAccounts({search_term: args?.searchQuery}),
   });

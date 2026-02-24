@@ -5,7 +5,7 @@ const menu = skin => ({
         slotProps: {
           paper: {
             elevation: 0,
-            borderRadius: '4px',
+            sx: {borderRadius: '4px'},
           },
         },
       }),

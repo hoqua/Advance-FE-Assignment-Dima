@@ -22,7 +22,6 @@ class FlexxNextApiService {
       );
     }
     this.baseUrl = process.env.PUBLIC_BACKEND_API_URL;
-    console.log('this.baseUrl', this.baseUrl);
   }
 
   private backendApiUrl() {
@@ -63,11 +62,6 @@ class FlexxNextApiService {
     if (hasJsonBody && !outgoingHeaders['Content-Type']) {
       outgoingHeaders['Content-Type'] = 'application/json';
     }
-
-    console.log('FlexxNextApiService request', {
-      method,
-      url,
-    });
 
     const fetchInit = {
       method,
@@ -177,7 +171,6 @@ class FlexxNextApiService {
     headers?: Record<string, string>;
     options?: requestOptions;
   }) {
-    console.log('Next API GET', url);
     return this.request({method: 'GET', url, req, headers, options});
   }
 

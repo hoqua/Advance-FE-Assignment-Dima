@@ -54,8 +54,6 @@ async function request<T>({
 
   const requestBody = body ? JSON.stringify(body) : undefined;
 
-  console.log(`[API] ${method} ${endpoint}`);
-
   const response = await fetch(url, {
     method,
     headers: requestHeaders,

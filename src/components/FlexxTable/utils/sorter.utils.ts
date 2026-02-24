@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {Comparator} from 'lodash';
+import {isValid, parseISO, compareDesc} from 'date-fns';
 
 import {FlexxTableRow, SortOrder} from '../domain/FlexxTable';
 
@@ -12,12 +13,24 @@ function descendingComparator(
   if (comparator) {
     return comparator(a?.metadata, b?.metadata) ? -1 : 1;
   }
-  const aValue = a.data[orderBy]?.toString() ?? '';
-  const bValue = b.data[orderBy]?.toString() ?? '';
-  const isNumeric = !isNaN(parseFloat(aValue)) && !isNaN(parseFloat(bValue));
-  const aCompared = isNumeric ? parseFloat(aValue) : aValue.toLowerCase();
-  const bCompared = isNumeric ? parseFloat(bValue) : bValue.toLowerCase();
-  return (bCompared < aCompared && -1) || (bCompared > aCompared && 1) || 0;
+  const aRaw = a.data[orderBy];
+  const bRaw = b.data[orderBy];
+  const aValue = aRaw?.toString() ?? '';
+  const bValue = bRaw?.toString() ?? '';
+
+  const aDate = parseISO(aValue);
+  const bDate = parseISO(bValue);
+  if (isValid(aDate) && isValid(bDate)) {
+    return compareDesc(aDate, bDate);
+  }
+
+  const aNum = Number(aValue);
+  const bNum = Number(bValue);
+  if (isFinite(aNum) && isFinite(bNum)) {
+    return bNum - aNum;
+  }
+
+  return bValue.toLowerCase().localeCompare(aValue.toLowerCase());
 }
 
 function getComparator(
