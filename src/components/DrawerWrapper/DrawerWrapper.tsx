@@ -217,6 +217,14 @@ const DrawerWrapper: React.FC<DrawerWrapperProps> = ({
       style={
         isFullWidth ? {zIndex: 'var(--drawer-extended-z-index) !important'} : {}
       }
+      ModalProps={{
+        onClickCapture: (e: React.MouseEvent) => {
+          const paper = (e.currentTarget as HTMLElement).querySelector('.MuiDrawer-paper');
+          if (paper && !paper.contains(e.target as Node)) {
+            onClose();
+          }
+        },
+      }}
       PaperProps={{
         style: {
           minWidth: isSmDown ? '100%' : '500px',

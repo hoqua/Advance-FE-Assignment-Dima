@@ -142,7 +142,20 @@ const capitalizeFirstLetter = (str?: string | null) => {
     : '';
 };
 
-const formatAccountNumber = (str: string) => '**' + str.slice(-4);
+const formatAccountNumber = (str: string) => {
+  const full = formatFullAccountNumber(str);
+  let digitsSeen = 0;
+  const maskUpTo = str.length - 4;
+
+  return full
+    .split('')
+    .map(ch => {
+      if (ch === ' ') return ' ';
+      digitsSeen++;
+      return digitsSeen <= maskUpTo ? '*' : ch;
+    })
+    .join('');
+};
 
 const formatFullAccountNumber = (str: string) => {
   const first4 = str.slice(0, 4);

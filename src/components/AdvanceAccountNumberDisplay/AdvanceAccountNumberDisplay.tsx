@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 
-import {Typography, TypographyProps} from '@mui/material';
-import {Skeleton, TypographyVariant} from '@mui/material';
-import {formatAccountNumber} from '@/utils/formatter.utils';
-import {formatFullAccountNumber} from '@/utils/formatter.utils';
+import {IconButton, Skeleton, Stack, Typography, TypographyProps, TypographyVariant} from '@mui/material';
+import {formatAccountNumber, formatFullAccountNumber} from '@/utils/formatter.utils';
 import CopyIconButton from '@components/CopyIconButton/CopyIconButton';
-import {HIDE_ACCOUNT_NUMBER_AFTER_CLICK_MS} from '@/components/AdvanceAccountNumberDisplay/constants/constants';
+import FlexxIcon from '@components/FlexxIcon/FlexxIcon';
 
 interface AdvanceAccountNumberDisplayProps {
   accountNumber?: string;
@@ -15,6 +13,8 @@ interface AdvanceAccountNumberDisplayProps {
   variant?: TypographyVariant;
   fontWeight?: TypographyProps['fontWeight'];
 }
+
+const monoFont = {fontFamily: 'monospace'};
 
 const AdvanceAccountNumberDisplay: React.FC<
   AdvanceAccountNumberDisplayProps
@@ -34,47 +34,56 @@ const AdvanceAccountNumberDisplay: React.FC<
 
   if (!accountNumber) {
     return (
-      <Typography
-        variant={variant ?? 'h2'}
-        color={'secondary.main'}
-        minWidth={100}
-        sx={{
-          alignItems: 'center',
-          gap: '0.5rem',
-          textWrap: 'nowrap',
-        }}
-      >
+      <Typography variant={variant ?? 'h2'} color='secondary.main'>
         N/A
       </Typography>
     );
   }
 
+  const fullDisplay = formatFullAccountNumber(accountNumber);
+  const maskedDisplay = formatAccountNumber(accountNumber);
+
   return (
-    <Typography
-      variant={variant ?? 'h2'}
-      color={'secondary.main'}
-      fontWeight={fontWeight}
-      sx={{
-        alignItems: 'center',
-        textWrap: 'nowrap',
-      }}
-    >
-      {isRevealed
-        ? formatFullAccountNumber(accountNumber)
-        : formatAccountNumber(accountNumber)}
-      {(!removeClipboardIcon || !isRevealed) && !removeEyeIcon && (
-        <CopyIconButton
-          valueToCopy={accountNumber}
-          iconHeight={20}
-          iconWidth={20}
-          noHoverIconButton
-          withReveal
-          size='small'
-          duration={HIDE_ACCOUNT_NUMBER_AFTER_CLICK_MS}
-          externalReveal={{state: isRevealed, setState: setIsRevealed}}
-        />
-      )}
-    </Typography>
+    <Stack direction='row' alignItems='center' gap={1.5}>
+      <Typography
+        variant={variant ?? 'h2'}
+        color='secondary.main'
+        fontWeight={fontWeight}
+        sx={{textWrap: 'nowrap', ...monoFont}}
+      >
+        {isRevealed ? fullDisplay : maskedDisplay}
+      </Typography>
+      <Stack direction='row' alignItems='center' gap={0.25}>
+        {!removeEyeIcon && (
+          <IconButton
+            size='small'
+            onClick={e => {
+              e.stopPropagation();
+              setIsRevealed(prev => !prev);
+            }}
+            sx={{
+              '&:hover': {backgroundColor: 'transparent'},
+              p: 0,
+            }}
+          >
+            <FlexxIcon
+              icon={isRevealed ? 'fluent--eye-off-20-regular' : 'fluent--eye-20-regular'}
+              width={20}
+              height={20}
+            />
+          </IconButton>
+        )}
+        {!removeClipboardIcon && (
+          <CopyIconButton
+            valueToCopy={accountNumber}
+            iconHeight={20}
+            iconWidth={20}
+            noHoverIconButton
+            size='small'
+          />
+        )}
+      </Stack>
+    </Stack>
   );
 };
 export default AdvanceAccountNumberDisplay;

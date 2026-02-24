@@ -12,6 +12,7 @@ import '@assets/iconify-icons/generated-icons.css';
 
 // Component imports
 import ReactQueryProvider from '@components/ReactQueryProvider/ReactQueryProvider';
+import {NuqsAdapter} from 'nuqs/adapters/next/app';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -48,9 +49,11 @@ const RootLayout: React.FC<RootLayoutProps> = async props => {
   return (
     <html id='__next' lang={params.lang} dir={direction}>
       <ReactQueryProvider>
-        <body className='flex is-full min-bs-full flex-auto flex-col'>
-          {children}
-        </body>
+        <NuqsAdapter>
+          <body className='flex is-full min-bs-full flex-auto flex-col'>
+            {children}
+          </body>
+        </NuqsAdapter>
       </ReactQueryProvider>
     </html>
   );
