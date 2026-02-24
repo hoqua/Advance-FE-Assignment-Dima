@@ -126,7 +126,7 @@ const Home = () => {
                 <ListItem key={name} disableGutters>
                   <ListItemText
                     primary={
-                      <Typography variant='body2'>
+                      <Typography variant='body2' component='span'>
                         <Chip label={name} size='small' sx={{mr: 1}} />
                         {desc}
                       </Typography>

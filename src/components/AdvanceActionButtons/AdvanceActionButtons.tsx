@@ -29,7 +29,6 @@ const AdvanceActionButtons: FC<FlexxActionButtonsProps> = ({
         <AdvanceActionButton
           key={buttonConfig.name}
           {...buttonConfig}
-          origin={origin}
           isLoading={isLoading}
           size={size}
         />
