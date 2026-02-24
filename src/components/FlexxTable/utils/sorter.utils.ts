@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {Comparator} from 'lodash';
+import type {Comparator} from 'lodash';
 
 import {FlexxTableRow, SortOrder} from '../domain/FlexxTable';
 

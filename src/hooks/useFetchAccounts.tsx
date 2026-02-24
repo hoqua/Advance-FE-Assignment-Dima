@@ -1,4 +1,4 @@
-import {useQuery} from 'react-query';
+import {useQuery} from '@tanstack/react-query';
 
 import {Account} from '@/domain/Account';
 import {QueryClientIds} from '@/QueryClient/queryClient.ids';
@@ -9,9 +9,11 @@ interface useFetchAccountsArgs {
 }
 
 const useFetchAccounts = (args?: useFetchAccountsArgs) => {
-  return useQuery<Account[]>([QueryClientIds.ACCOUNTS], () =>
-    flexxApiService().fetchAccounts({search_term: args?.searchQuery}),
-  );
+  return useQuery<Account[]>({
+    queryKey: [QueryClientIds.ACCOUNTS],
+    queryFn: () =>
+      flexxApiService().fetchAccounts({search_term: args?.searchQuery}),
+  });
 };
 
 export default useFetchAccounts;

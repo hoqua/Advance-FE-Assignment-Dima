@@ -1,4 +1,4 @@
-import {Comparator} from 'lodash';
+import type {Comparator} from 'lodash';
 import React, {FC, useEffect, useRef} from 'react';
 
 import FlexxIcon from '@components/FlexxIcon/FlexxIcon';

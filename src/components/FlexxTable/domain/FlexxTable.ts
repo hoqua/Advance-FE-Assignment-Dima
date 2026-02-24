@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {JSX} from 'react';
-import {Comparator} from 'lodash';
+import type {Comparator} from 'lodash';
 
 type FlexxTableRowDataType =
   | string

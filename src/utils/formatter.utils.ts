@@ -1,4 +1,4 @@
-import {debounce} from 'lodash';
+import debounce from 'lodash/debounce';
 import {toast} from 'react-toastify';
 import {format, parse} from 'date-fns';
 import {toZonedTime} from 'date-fns-tz';

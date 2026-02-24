@@ -1,5 +1,5 @@
 'use client';
-import {Comparator} from 'lodash';
+import type {Comparator} from 'lodash';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {useDynamicColumns} from '@components/FlexxTable/hooks';

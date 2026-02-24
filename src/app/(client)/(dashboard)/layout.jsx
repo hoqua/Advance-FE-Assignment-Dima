@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 // Config Imports
 import {i18n} from '@configs/i18n';
 // MUI Imports
@@ -9,13 +10,18 @@ import LayoutWrapper from '@layouts/LayoutWrapper';
 // Util Imports
 import {getDictionary} from '@/utils/getDictionary';
 import VerticalLayout from '@layouts/VerticalLayout';
-import HorizontalLayout from '@layouts/HorizontalLayout';
 import ScrollToTop from '@core/components/scroll-to-top';
 import Navbar from '@components/FlexxLayout/FlexxVerticalLayout/Navbar';
-import Header from '@components/FlexxLayout/FlexxHorizontalLayout/Header';
 import {getMode, getSkin, getSystemMode} from '@core/utils/serverHelpers';
 import Navigation from '@components/FlexxLayout/FlexxVerticalLayout/Navigation';
-import HorizontalFooter from '@components/FlexxLayout/FlexxHorizontalLayout/Footer';
+
+const HorizontalLayout = dynamic(() => import('@layouts/HorizontalLayout'));
+const Header = dynamic(
+  () => import('@components/FlexxLayout/FlexxHorizontalLayout/Header'),
+);
+const HorizontalFooter = dynamic(
+  () => import('@components/FlexxLayout/FlexxHorizontalLayout/Footer'),
+);
 
 const Layout = async props => {
   const params = await props.params;
